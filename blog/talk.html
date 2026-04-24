@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>聊一聊</title>
+    <link rel="stylesheet" type="text/css" href="talk.css">
+    <script>
+        const API_BASE = 'http://106.14.29.151:8000';
+        const PAGE_SIZE = 10; // 每页显示的留言数
+        let currentPage = 1;
+        let isLoading = false;
+        let hasMore = true;
+        let allMessages = []; // 存储所有已加载的留言
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>留个言吧</h1>
+        
+        <!-- 留言表单 -->
+        <div class="message-form">
+            <h2>发表留言</h2>
+            <form id="messageForm">
+                <div class="form-group">
+                    <label for="username">您的昵称:</label>
+                    <input type="text" id="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="content">留言内容:</label>
+                    <textarea id="content" rows="4" required></textarea>
+                    <button type="button" class="emoji-button" id="messageEmojiBtn">😊</button>
+                    <div class="emoji-picker" id="messageEmojiPicker">
+                        <div class="emoji-option" title="微笑">😀</div>
+                        <div class="emoji-option" title="大笑">😂</div>
+                        <div class="emoji-option" title="色">😍</div>
+                        <div class="emoji-option" title="酷">😎</div>
+                        <div class="emoji-option" title="赞">👍</div>
+                        <div class="emoji-option" title="鼓掌">👏</div>
+                        <div class="emoji-option" title="爱心">❤️</div>
+                        <div class="emoji-option" title="开心">😊</div>
+                        <div class="emoji-option" title="思考">🤔</div>
+                        <div class="emoji-option" title="白眼">🙄</div>
+                        <div class="emoji-option" title="睡觉">😴</div>
+                        <div class="emoji-option" title="惊讶">😱</div>
+                        <div class="emoji-option" title="哭">😭</div>
+                        <div class="emoji-option" title="生气">😡</div>
+                        <div class="emoji-option" title="骂人">🤬</div>
+                        <div class="emoji-option" title="鄙视">😤</div>
+                        <div class="emoji-option" title="踩">👎</div>
+                        <div class="emoji-option" title="批评">🙅</div>
+                        <div class="emoji-option" title="翻白眼">😒</div>
+                        <div class="emoji-option" title="无语">😑</div>
+                        <div class="emoji-option" title="尴尬">😅</div>
+                        <div class="emoji-option" title="委屈">😞</div>
+                        <div class="emoji-option" title="愤怒">💢</div>
+                        <div class="emoji-option" title="炸弹">💣</div>
+                        <div class="emoji-option" title="骷髅">💀</div>
+                        <div class="emoji-option" title="辣椒">🌶</div>
+                        <div class="emoji-option" title="拳头">👊</div>
+                        <div class="emoji-option" title="汗">😓</div>
+                        <div class="emoji-option" title="晕">😵</div>
+                        <div class="emoji-option" title="恶魔">😈</div>
+                        <div class="emoji-option" title="衰">💣</div>
+                        <div class="emoji-option" title="再见">👋</div>
+                    </div>
+                </div>
+                 <!-- 验证码 -->
+                <div class="form-group">
+                    <div class="captcha-label">
+                        <span class="captcha-icon">🛡️</span>
+                        <label for="captcha">验证码:</label>
+                    </div>
+                    <div class="captcha-container">
+                        <span class="captcha-question" id="captcha-question"></span>
+                        <input type="text" id="captcha-answer" class="captcha-answer" placeholder="输入答案" required>
+                        <button type="button" id="refresh-captcha" class="refresh-captcha">🔄 刷新</button>
+                    </div>
+                </div>
+                <button type="submit">发表留言</button>
+            </form>
+        </div>
+        
+        <!-- 留言列表 -->
+        <div class="messages-list">
+            <h2>大家的留言</h2>
+            <div id="messagesContainer"></div>
+            <div id="loadingIndicator" class="loading" style="display: none;">加载中...</div>
+            <div id="noMoreIndicator" class="no-more" style="display: none;">没有更多留言了</div>
+        </div>
+    </div>
+
+    <!-- 管理员密码模态框 -->
+    <div id="adminPasswordModal" class="modal">
+        <div class="modal-content">
+            <h3>管理员验证</h3>
+            <p>请输入管理员密码以删除留言</p>
+            <input type="password" id="admin-password-input" placeholder="管理员密码">
+            <div class="modal-buttons">
+                <button id="confirm-delete-btn" class="delete-admin-button">确认删除</button>
+                <button id="cancel-delete-btn" class="cancel-admin-button">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 验证码相关变量
+        let currentCaptchaId = null;
+        let deleteTarget = null; // 存储要删除的目标信息
+
+        // 初始化验证码
+        async function initCaptcha() {
+            await refreshCaptcha();
+        }
+
+        // 刷新验证码
+        async function refreshCaptcha() {
+            try {
+                const response = await fetch(`${API_BASE}/captcha/`);
+                const data = await response.json();
+                currentCaptchaId = data.id;
+                document.getElementById('captcha-question').textContent = data.question;
+                document.getElementById('captcha-answer').value = '';
+            } catch (error) {
+                console.error('获取验证码失败:', error);
+            }
+        }
+
+        // 为回复表单刷新验证码
+        async function refreshReplyCaptcha(button) {
+            try {
+                const response = await fetch(`${API_BASE}/captcha/`);
+                const data = await response.json();
+                const container = button.closest('.captcha-container');
+                container.querySelector('.captcha-question').textContent = data.question;
+                container.querySelector('.captcha-answer').dataset.captchaId = data.id;
+                container.querySelector('.captcha-answer').value = '';
+            } catch (error) {
+                console.error('获取验证码失败:', error);
+            }
+        }
+
+        // 验证验证码
+        async function verifyCaptcha(captchaId, answer) {
+            try {
+                const response = await fetch(`${API_BASE}/verify-captcha/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ id: captchaId, answer: answer })
+                });
+                return await response.json();
+            } catch (error) {
+                console.error('验证码验证失败:', error);
+                return { valid: false };
+            }
+        }
+
+        // 显示自定义通知
+        function showNotification(message, type = 'info') {
+            // 移除已存在的通知
+            const existingOverlay = document.querySelector('.notification-overlay');
+            if (existingOverlay) {
+                existingOverlay.remove();
+            }
+            
+            // 创建通知覆盖层
+            const overlay = document.createElement('div');
+            overlay.className = 'notification-overlay';
+            
+            // 创建通知元素
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            
+            // 组装元素
+            overlay.appendChild(notification);
+            document.body.appendChild(overlay);
+            
+            // 显示通知
+            setTimeout(() => {
+                overlay.classList.add('show');
+            }, 10);
+            
+            // 3秒后自动隐藏
+            setTimeout(() => {
+                overlay.classList.remove('show');
+                // 动画结束后移除元素
+                setTimeout(() => {
+                    if (overlay.parentNode) {
+                        overlay.parentNode.removeChild(overlay);
+                    }
+                }, 300);
+            }, 1000);
+        }
+
+        // 显示删除确认模态框
+        function showDeleteModal(target) {
+            deleteTarget = target;
+            document.getElementById('admin-password-input').value = '';
+            document.getElementById('adminPasswordModal').style.display = 'block';
+        }
+
+        // 隐藏删除确认模态框
+        function hideDeleteModal() {
+            document.getElementById('adminPasswordModal').style.display = 'none';
+            deleteTarget = null;
+        }
+
+        // 删除留言或回复
+        async function deleteMessage() {
+            if (!deleteTarget) return;
+
+            const passwordInput = document.getElementById('admin-password-input');
+            const password = passwordInput.value;
+            console.log('Password value:', password); // 调试信息
+            if (!password) {
+                showNotification('请输入管理员密码', 'error');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/messages/${deleteTarget.id}/`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ password: password })
+                });
+
+                if (response.ok) {
+                    showNotification('删除成功', 'success');
+                    hideDeleteModal();
+                    // 重新加载留言
+                    currentPage = 1;
+                    allMessages = [];
+                    hasMore = true;
+                    loadMessages();
+                } else if (response.status === 401) {
+                    showNotification('管理员密码错误', 'error');
+                } else {
+                    showNotification('删除失败', 'error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showNotification('网络错误', 'error');
+            }
+        }
+
+        // 提交留言表单
+        document.getElementById('messageForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const content = document.getElementById('content').value;
+            const captchaAnswer = document.getElementById('captcha-answer').value;
+
+            // 验证验证码
+            if (!currentCaptchaId || !captchaAnswer) {
+                showNotification('请输入验证码', 'error');
+                return;
+            }
+            
+            const verification = await verifyCaptcha(currentCaptchaId, captchaAnswer);
+            if (!verification.valid) {
+                showNotification('验证码错误', 'error');
+                await refreshCaptcha();
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/messages/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, content })
+                });
+                
+                if (response.ok) {
+                    document.getElementById('content').value = '';
+                     await refreshCaptcha(); // 提交成功后刷新验证码
+                     // 重新加载第一页
+                    currentPage = 1;
+                    allMessages = [];
+                    hasMore = true;
+                    loadMessages();
+                } else {
+                    showNotification('发表留言失败', 'error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showNotification('网络错误', 'error');
+            }
+        });
+        
+        // 加载所有留言
+        async function loadMessages() {
+            if (isLoading || !hasMore) return;
+            
+            isLoading = true;
+            document.getElementById('loadingIndicator').style.display = 'block';
+
+            try {
+                const response = await fetch(`${API_BASE}/messages/?page=${currentPage}&size=${PAGE_SIZE}`);
+                const result  = await response.json();
+                // 如果后端不支持分页，需要修改这里
+                // 假设后端返回 { messages: [...], hasMore: true/false }
+                const newMessages = result.messages || result;
+                hasMore = result.hasMore !== undefined ? result.hasMore : newMessages.length === PAGE_SIZE;
+                
+                if (currentPage === 1) {
+                    allMessages = [...newMessages];
+                } else {
+                    allMessages = [...allMessages, ...newMessages];
+                }
+                
+                displayMessages(allMessages);
+                currentPage++;
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('messagesContainer').innerHTML = '<p>加载留言失败</p>';
+            } finally {
+                isLoading = false;
+                document.getElementById('loadingIndicator').style.display = 'none';
+                
+                if (!hasMore) {
+                    document.getElementById('noMoreIndicator').style.display = 'block';
+                }
+            }
+        }
+
+        // 使用事件委托处理动态创建的元素
+        document.addEventListener('click', async function(e) {
+            // 检查是否是回复表单的提交事件
+            if (e.target.tagName === 'BUTTON' && e.target.textContent === '提交回复') {
+                e.preventDefault();
+                
+                const form = e.target.closest('.reply-form');
+
+                if (form) {
+                    const messageId = form.dataset.id;
+                    const username = form.querySelector('.reply-username').value;
+                    const content = form.querySelector('.reply-content').value;
+                    const captchaAnswer = form.querySelector('.captcha-answer').value;
+                    const captchaId = form.querySelector('.captcha-answer').dataset.captchaId;
+                    
+                    if (!username || !content) {
+                        showNotification('请填写昵称和回复内容', 'error');
+                        return;
+                    }
+
+                    // 验证验证码
+                    if (!captchaId || !captchaAnswer) {
+                        showNotification('请输入回复验证码', 'error');
+                        return;
+                    }
+                    
+                    const verification = await verifyCaptcha(captchaId, captchaAnswer);
+                    if (!verification.valid) {
+                        showNotification('验证码错误', 'error');
+                        await refreshReplyCaptcha(form.querySelector('.refresh-captcha'));
+                        return;
+                    }
+                    
+                    try {
+                        const response = await fetch(`${API_BASE}/messages/`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ 
+                                username, 
+                                content,
+                                parent_id: parseInt(messageId)
+                            })
+                        });
+                        
+                        if (response.ok) {
+                            form.querySelector('.reply-content').value = '';
+                            form.style.display = 'none';
+                            await refreshReplyCaptcha(form.querySelector('.refresh-captcha'));
+                            // 重新加载第一页
+                            currentPage = 1;
+                            allMessages = [];
+                            hasMore = true;
+                            loadMessages();
+                        } else {
+                            showNotification('回复失败', 'error');
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                        showNotification('网络错误', 'error');
+                    }
+                }
+            }
+
+            // 处理表情选择
+            if (e.target.classList.contains('emoji-option')) {
+                const emoji = e.target.textContent;
+                const picker = e.target.closest('.emoji-picker');
+                
+                // 找到对应的textarea
+                let textarea;
+                if (picker.id === 'messageEmojiPicker') {
+                    textarea = document.getElementById('content');
+                } else {
+                    const form = picker.closest('.reply-form');
+                    if (form) {
+                        textarea = form.querySelector('.reply-content');
+                    }
+                }
+                
+                if (textarea) {
+                    textarea.value += emoji;
+                    picker.classList.remove('show');
+                }
+            }
+
+            // 处理刷新验证码按钮点击
+            if (e.target.id === 'refresh-captcha' || e.target.classList.contains('refresh-captcha')) {
+                if (e.target.id === 'refresh-captcha') {
+                    refreshCaptcha();
+                } else {
+                    refreshReplyCaptcha(e.target);
+                }
+            }
+
+            // 处理删除按钮点击
+            if (e.target.classList.contains('delete-button') && e.target.id !== 'confirm-delete-btn') {
+                const messageId = e.target.dataset.id;
+                const isReply = e.target.dataset.reply === 'true';
+                
+                showDeleteModal({
+                    id: messageId,
+                    isReply: isReply
+                });
+            }
+        });
+        
+        // 使用事件委托处理回复按钮点击
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('reply-toggle')) {
+                const messageId = e.target.dataset.id;
+                const form = document.getElementById(`reply-form-${messageId}`);
+
+                const currentDisplay = window.getComputedStyle(form).display;
+                form.style.display = currentDisplay === 'none' ? 'block' : 'none';
+
+                // 显示回复表单时初始化验证码
+                if (form.style.display === 'block') {
+                    const captchaQuestion = form.querySelector('.captcha-question');
+                    if (captchaQuestion && !captchaQuestion.textContent) {
+                        refreshReplyCaptcha(form.querySelector('.refresh-captcha'));
+                    }
+                }
+            }
+
+            // 处理表情按钮点击
+            if (e.target.classList.contains('emoji-button')) {
+                const picker = e.target.nextElementSibling;
+                if (picker && picker.classList.contains('emoji-picker')) {
+                    picker.classList.toggle('show');
+                }
+            }
+            
+            // 点击其他地方关闭表情选择器
+            if (!e.target.closest('.emoji-button') && !e.target.closest('.emoji-picker')) {
+                document.querySelectorAll('.emoji-picker.show').forEach(picker => {
+                    picker.classList.remove('show');
+                });
+            }
+
+            // 处理模态框相关按钮点击
+            if (e.target.id === 'confirm-delete-btn') {
+                e.preventDefault();
+                e.stopPropagation();
+                deleteMessage();
+            }
+
+            if (e.target.id === 'cancel-delete-btn') {
+                e.preventDefault();
+                e.stopPropagation();
+                hideDeleteModal();
+            }
+            
+            // 点击模态框背景关闭模态框，但要排除点击模态框内容区域
+            if (e.target.id === 'adminPasswordModal') {
+                e.preventDefault();
+                e.stopPropagation();
+                hideDeleteModal();
+            }
+        });
+
+        // 监听滚动事件实现无限滚动
+        window.addEventListener('scroll', function() {
+            if (isLoading || !hasMore) return;
+            
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            const clientHeight = document.documentElement.clientHeight;
+            const scrollHeight = document.documentElement.scrollHeight;
+            
+            // 当滚动到底部附近时加载更多
+            if (scrollTop + clientHeight >= scrollHeight - 100) {
+                loadMessages();
+            }
+        });
+        
+        // 显示留言
+        function displayMessages(messages) {
+            const container = document.getElementById('messagesContainer');
+            
+            if (messages.length === 0) {
+                container.innerHTML = '<p>暂无留言</p>';
+                return;
+            }
+            
+            container.innerHTML = messages.map(message => renderMessage(message)).join('');
+            
+        }
+        
+        // 渲染单个留言
+        function renderMessage(message) {
+            return `
+                <div class="message">
+                    <div class="message-header">
+                        <div class="message-user-info">
+                            <span class="message-username">${message.username}</span>
+                            <span class="message-time">${new Date(message.created_at).toLocaleString()}</span>
+                        </div>
+                        <button class="delete-button" data-id="${message.id}" data-reply="false">X</button>
+                    </div>
+                    <div class="message-content">${message.content}</div>
+                    <button class="reply-button reply-toggle" data-id="${message.id}">回复</button>
+                    
+                    <div class="reply-form" id="reply-form-${message.id}" data-id="${message.id}">
+                        <div class="form-group">
+                            <label>昵称:</label>
+                            <input type="text" class="reply-username" required>
+                        </div>
+                        <div class="form-group">
+                            <label>回复内容:</label>
+                            <textarea class="reply-content" rows="2" required></textarea>
+                            <button type="button" class="emoji-button">😊</button>
+                            <div class="emoji-picker">
+                                <div class="emoji-option" title="微笑">😀</div>
+                                <div class="emoji-option" title="大笑">😂</div>
+                                <div class="emoji-option" title="色">😍</div>
+                                <div class="emoji-option" title="酷">😎</div>
+                                <div class="emoji-option" title="赞">👍</div>
+                                <div class="emoji-option" title="鼓掌">👏</div>
+                                <div class="emoji-option" title="爱心">❤️</div>
+                                <div class="emoji-option" title="开心">😊</div>
+                                <div class="emoji-option" title="思考">🤔</div>
+                                <div class="emoji-option" title="白眼">🙄</div>
+                                <div class="emoji-option" title="睡觉">😴</div>
+                                <div class="emoji-option" title="惊讶">😱</div>
+                                <div class="emoji-option" title="哭">😭</div>
+                                <div class="emoji-option" title="生气">😡</div>
+                                <div class="emoji-option" title="骂人">🤬</div>
+                                <div class="emoji-option" title="鄙视">😤</div>
+                                <div class="emoji-option" title="踩">👎</div>
+                                <div class="emoji-option" title="批评">🙅</div>
+                                <div class="emoji-option" title="翻白眼">😒</div>
+                                <div class="emoji-option" title="无语">😑</div>
+                                <div class="emoji-option" title="尴尬">😅</div>
+                                <div class="emoji-option" title="委屈">😞</div>
+                                <div class="emoji-option" title="愤怒">💢</div>
+                                <div class="emoji-option" title="炸弹">💣</div>
+                                <div class="emoji-option" title="骷髅">💀</div>
+                                <div class="emoji-option" title="辣椒">🌶</div>
+                                <div class="emoji-option" title="拳头">👊</div>
+                                <div class="emoji-option" title="汗">😓</div>
+                                <div class="emoji-option" title="晕">😵</div>
+                                <div class="emoji-option" title="恶魔">😈</div>
+                                <div class="emoji-option" title="衰">💣</div>
+                                <div class="emoji-option" title="再见">👋</div>
+                            </div>
+                        </div>
+                        <!-- 回复验证码 -->
+                        <div class="form-group">
+                            <div class="captcha-label">
+                                <span class="captcha-icon">🛡️</span>
+                                <label>回复验证码:</label>
+                            </div>
+                            <div class="captcha-container">
+                                <span class="captcha-question"></span>
+                                <input type="text" class="captcha-answer" placeholder="输入答案" required>
+                                <button type="button" class="refresh-captcha">🔄 刷新</button>
+                            </div>
+                        </div>
+                        <button type="submit">提交回复</button>
+                    </div>
+                    
+                    ${message.replies.length > 0 ? `
+                        <div class="replies">
+                            ${message.replies.map(reply => renderReply(reply)).join('')}
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+        }
+        
+        // 渲染回复
+        function renderReply(reply) {
+            return `
+                <div class="reply">
+                    <div class="reply-header">
+                        <div class="reply-user-info">
+                            <span class="reply-username">${reply.username}</span>
+                            <span class="reply-time">${new Date(reply.created_at).toLocaleString()}</span>
+                        </div>
+                        <button class="delete-button" data-id="${reply.id}" data-reply="true">X</button>
+                    </div>
+                    <div class="message-content">${reply.content}</div>
+                    
+                    ${reply.replies.length > 0 ? `
+                        <div class="replies">
+                            ${reply.replies.map(r => renderReply(r)).join('')}
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+        }
+        
+        // 页面加载时获取留言
+        document.addEventListener('DOMContentLoaded', function() {
+            loadMessages();
+            initCaptcha(); // 初始化留言表单验证码
+        });
+    </script>
+</body>
+</html>

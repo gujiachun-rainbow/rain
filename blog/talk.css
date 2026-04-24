@@ -1,0 +1,436 @@
+body {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+.container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+h1 {
+    text-align: center;
+    color: #333;
+}
+.message-form {
+    margin-bottom: 30px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+.form-group {
+    margin-bottom: 15px;
+}
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+input, textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #0056b3;
+}
+.messages-list {
+    margin-top: 30px;
+}
+.message {
+    border: 1px solid #eee;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 15px;
+    background-color: white;
+}
+.message-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 0.9em;
+    color: #666;
+}
+.message-user-info {
+    display: flex;
+    flex-direction: column;
+}
+.message-username {
+    font-weight: bold;
+    color: #333;
+    font-size: 1.1em;
+}
+.message-time {
+    font-size: 0.85em;
+    color: #999;
+}
+.message-content {
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+.reply-form {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #f0f8ff;
+    border-radius: 4px;
+    display: none;
+}
+.replies {
+    margin-left: 30px;
+    margin-top: 15px;
+}
+.reply {
+    border-left: 2px solid #007bff;
+    padding-left: 10px;
+    margin-bottom: 10px;
+}
+.reply-button {
+    background-color: #28a745;
+    font-size: 0.8em;
+    padding: 5px 10px;
+}
+/* 表情相关样式 */
+.emoji-picker {
+    display: none;
+    position: absolute;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    z-index: 1000;
+    width: 260px;
+    flex-wrap: wrap;
+}
+
+.emoji-picker.show {
+    display: flex;
+}
+
+.emoji-option {
+    cursor: pointer;
+    padding: 5px;
+    font-size: 1.2em;
+}
+
+.emoji-option:hover {
+    background-color: #f0f0f0;
+}
+
+.emoji-button {
+    background: none;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.2em;
+    width: auto;
+    padding: 2px 8px;
+    margin-top: 5px;
+}
+
+.emoji-button:hover {
+    background-color: #f0f0f0;
+}
+
+.input-container {
+    position: relative;
+}
+
+/* 放大留言内容输入框字体 */
+#content {
+    font-size: 20px;
+}
+
+/* 放大回复内容输入框字体 */
+.reply-content {
+    font-size: 20px;
+}
+
+.message-content{
+    font-size: 20px;
+}
+
+    /* 验证码样式优化 - 更小巧 */
+.captcha-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 5px;
+    padding: 8px 12px;
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 3px;
+    font-size: 0.9em;
+}
+
+.captcha-question {
+    font-weight: normal;
+    font-size: 1.1em;
+    color: #495057;
+    min-width: 90px;
+    text-align: center;
+    background-color: #ffffff;
+    padding: 5px 8px;
+    border-radius: 3px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.captcha-answer {
+    width: 80px;
+    padding: 6px;
+    font-size: 1em;
+    border: 1px solid #ced4da;
+    border-radius: 3px;
+    text-align: center;
+}
+
+.captcha-answer:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 0.1rem rgba(0,123,255,0.25);
+}
+
+.refresh-captcha {
+    padding: 5px 10px;
+    background-color: #449eef;
+    font-size: 0.8em;
+    border: none;
+    border-radius: 3px;
+    color: white;
+}
+
+.refresh-captcha:hover {
+    background-color: #0776c5;
+}
+
+.captcha-label {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    color: #495057;
+    font-size: 0.95em;
+}
+
+.captcha-icon {
+    margin-right: 5px;
+    font-size: 1em;
+}
+
+/* 响应式设计 */
+@media (max-width: 600px) {
+    .captcha-container {
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 10px;
+    }
+    
+    .captcha-question {
+        min-width: 80px;
+        padding: 4px 6px;
+        font-size: 1em;
+    }
+    
+    .captcha-answer {
+        width: 70px;
+        padding: 5px;
+    }
+}
+
+/* 自定义提示框样式 - 居中显示 */
+.notification-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.notification-overlay.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.notification {
+    padding: 20px 30px;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    font-size: 1.1em;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+    min-width: 300px;
+    text-align: center;
+    transform: translateY(-20px);
+    transition: transform 0.3s ease-in-out;
+}
+
+.notification-overlay.show .notification {
+    transform: translateY(0);
+}
+
+.notification.error {
+    background-color: #dc3545;
+}
+
+.notification.success {
+    background-color: #28a745;
+}
+
+.notification.info {
+    background-color: #17a2b8;
+}
+
+.loading {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+}
+.no-more {
+    text-align: center;
+    padding: 20px;
+    color: #999;
+}
+
+/* 删除按钮样式 */
+
+.delete-button {
+    background-color: transparent;
+    color: #999;
+    border: none;
+    width: 20px;
+    height: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border-radius: 50%;
+    transition: all 0.2s;
+}
+
+.delete-button:hover {
+    background-color: #c82333;
+}
+
+/* 管理员密码模态框 */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 10001;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 5px;
+    width: 300px;
+    text-align: center;
+}
+
+.modal-content input {
+    width: 100%;
+    padding: 8px;
+    margin: 10px 0;
+    box-sizing: border-box;
+}
+
+.modal-buttons {
+    margin-top: 15px;
+}
+
+.modal-buttons button {
+    margin: 0 5px;
+}
+
+.delete-admin-button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-size: 0.7em;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.cancel-admin-button {
+    background-color: #6c757d;
+}
+
+.cancel-admin-button:hover {
+    background-color: #5a6268;
+}
+
+.reply-form {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #f0f8ff;
+    border-radius: 4px;
+    display: none;
+}
+
+.replies {
+    margin-left: 30px;
+    margin-top: 15px;
+}
+
+.reply {
+    border-left: 2px solid #007bff;
+    padding-left: 10px;
+    margin-bottom: 10px;
+}
+
+.reply-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+    font-size: 0.85em;
+    color: #666;
+}
+
+.reply-user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.reply-username {
+    font-weight: bold;
+    color: #333;
+}
+
+.reply-time {
+    font-size: 0.8em;
+    color: #999;
+}

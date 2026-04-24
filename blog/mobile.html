@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <title>老顾聊技术的主页</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 100%;
+            padding: 0 15px;
+            margin: 0 auto;
+        }
+        
+        /* Header Styles */
+        #header-wrap {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        
+        #header {
+            padding: 10px 0;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 36px;
+        }
+        
+        .talk-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            text-decoration: none;
+        }
+        
+        /* Main Content */
+        main {
+            margin-top: 60px;
+            padding: 20px 0;
+        }
+        
+        section {
+            background: white;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .section-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            border-left: 4px solid #007bff;
+            padding-left: 10px;
+        }
+        
+        .subtitle {
+            font-size: 16px;
+            color: #007bff;
+            margin-bottom: 5px;
+        }
+        
+        /* Billboard Section */
+        #billboard {
+            text-align: center;
+        }
+        
+        .banner-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin: 15px 0;
+            color: #2c3e50;
+        }
+        
+        .banner-text {
+            font-size: 15px;
+            color: #555;
+            margin: 15px 0;
+            line-height: 1.7;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #007bff;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        
+        /* Services Section */
+        .service-intro {
+            margin-bottom: 20px;
+        }
+        
+        .service-text {
+            font-size: 15px;
+            color: #555;
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+        
+        .follow-btn {
+            display: inline-block;
+            background: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 14px;
+            margin: 10px 0;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .service-item {
+            text-align: center;
+        }
+        
+        .service-icon {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 10px;
+            display: block;
+        }
+        
+        .service-name {
+            font-size: 13px;
+            color: #555;
+        }
+        
+        /* Projects Section */
+        .tabs {
+            display: flex;
+            overflow-x: auto;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+        }
+        
+        .tab {
+            flex: 0 0 auto;
+            padding: 8px 15px;
+            background: #e9ecef;
+            border-radius: 20px;
+            margin-right: 10px;
+            font-size: 14px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        
+        .tab.active {
+            background: #007bff;
+            color: white;
+        }
+        
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        
+        .project-item {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            background: #f8f9fa;
+        }
+        
+        .project-img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .project-info {
+            padding: 10px;
+        }
+        
+        .project-title {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .project-category {
+            font-size: 12px;
+            color: #007bff;
+        }
+        
+        .project-link {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        /* Project content containers */
+        .project-content {
+            display: none;
+        }
+        
+        .project-content.active {
+            display: block;
+        }
+        
+        /* Price Table Section */
+        .price-table-title {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 20px;
+        }
+        
+        .course-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .course-category {
+            font-size: 14px;
+            color: #007bff;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .course-icon {
+            font-size: 40px;
+            margin: 10px 0;
+            color: #007bff;
+        }
+        
+        .course-price strong {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .course-features {
+            list-style: none;
+            margin: 15px 0;
+            text-align: left;
+        }
+        
+        .course-features li {
+            padding: 5px 0;
+            font-size: 14px;
+            border-bottom: 1px dashed #eee;
+        }
+        
+        .course-features li:last-child {
+            border-bottom: none;
+        }
+        
+        .course-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 14px;
+            margin-top: 10px;
+            border: 1px solid #007bff;
+            color: #007bff;
+        }
+        
+        .course-btn:hover {
+            background: #007bff;
+            color: white;
+        }
+        
+        .btn-disabled {
+            background: #6c757d;
+            border-color: #6c757d;
+            color: white;
+            cursor: not-allowed;
+        }
+        
+        .btn-disabled:hover {
+            background: #6c757d;
+            color: white;
+        }
+        
+        /* Footer */
+        #footer {
+            background: #2c3e50;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        
+        .footer-section {
+            margin-bottom: 20px;
+        }
+        
+        .footer-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        .contact-info {
+            font-size: 14px;
+            color: #ddd;
+            margin: 5px 0;
+        }
+        
+        #footer-bottom {
+            text-align: center;
+            padding: 15px 0;
+            font-size: 13px;
+            color: #777;
+            border-top: 1px solid #eee;
+        }
+        
+        /* QR Code Popup */
+        .qr-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            display: none;
+        }
+        
+        .qr-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 300px;
+            width: 80%;
+        }
+        
+        .qr-content img {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+        }
+        
+        .close-btn {
+            margin-top: 15px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            .services-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 10px;
+            }
+            
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .banner-title {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <div id="header-wrap">
+        <div class="container">
+            <header id="header">
+                <div class="header-content">
+                    <div class="logo">
+                        <a href="index.html"><img src="images/main-logo.png" alt="老顾聊技术"></a>
+                    </div>
+                    <a href="talk.html" target="_blank" class="talk-btn">Let's Talk</a>
+                </div>
+            </header>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <!-- Billboard Section -->
+            <section id="billboard">
+                <div class="subtitle">【老顾聊技术】</div>
+                <h1 class="banner-title">技术同路人留步！<br>不扯职场套路，<br>专挖技术本质的自留地</h1>
+                <p class="banner-text">不搞晦涩的学术派，只做接地气的实战派。在这里，你能看到开源社区里那些 "藏在评论区的大神思路"，能听到 AI 项目从 0 到 1 时 "差点夭折的关键转折"。老顾不想当什么技术权威，只想当你的技术搭子：你遇到的坎，我或许踩过；你琢磨的路，我们一起探。</p>
+                <a href="talk.html" target="_blank" class="btn">随时来聊</a>
+            </section>
+
+            <!-- Services Section -->
+            <section id="services">
+                <div class="subtitle">成长教程</div>
+                <h2 class="section-title">苗扎根、叶经炼、梁木成</h2>
+                
+                <div class="service-intro">
+                    <p class="service-text">想从技术萌新逆袭成架构师？成长教程【免费】帮你铺好了路：先把编程基础、数据结构这些地基扎稳，再练溜框架应用、性能优化的进阶本事，接着啃透分布式、高可用这些硬骨头，最后拿下系统设计和决策。跟着一步一个脚印往上走，技术实力绝对噌噌涨！</p>
+                    <a href="#" class="follow-btn" id="followBtn">关注公众号</a>
+                </div>
+                
+                <div class="services-grid">
+                    <div class="service-item">
+                        <img src="images/java_base.png" alt="Java基础" class="service-icon">
+                        <div class="service-name">Java基础</div>
+                    </div>
+                    <div class="service-item">
+                        <img src="images/weifw.png" alt="微服务" class="service-icon">
+                        <div class="service-name">微服务</div>
+                    </div>
+                    <div class="service-item">
+                        <img src="images/zhongjianjian.png" alt="中间件" class="service-icon">
+                        <div class="service-name">中间件</div>
+                    </div>
+                    <div class="service-item">
+                        <img src="images/qianduan.png" alt="前端" class="service-icon">
+                        <div class="service-name">前端</div>
+                    </div>
+                    <div class="service-item">
+                        <img src="images/yunyuansheng.png" alt="云原生" class="service-icon">
+                        <div class="service-name">云原生</div>
+                    </div>
+                    <div class="service-item">
+                        <img src="images/shizhan.png" alt="实战" class="service-icon">
+                        <div class="service-name">实战</div>
+                    </div>
+                    <div class="service-item">
+                        <img src="images/miaosha.png" alt="秒杀" class="service-icon">
+                        <div class="service-name">秒杀</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Projects Section -->
+            <section id="projects">
+                <div class="subtitle">作品集</div>
+                <h2 class="section-title">最新文章</h2>
+                
+                <div class="tabs">
+                    <div class="tab active" data-tab="all">推荐</div>
+                    <div class="tab" data-tab="branding">AI Agent</div>
+                    <div class="tab" data-tab="ecommerce">AI开源</div>
+                    <div class="tab" data-tab="photography">SpringCloud Alibaba</div>
+                    <div class="tab" data-tab="design">K8S</div>
+                    <div class="tab" data-tab="animation">面试</div>
+                </div>
+                
+                <!-- All Projects -->
+                <div class="project-content active" id="tab-all">
+                    <div class="project-grid">
+                        <div class="project-item">
+                            <a href="https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzU3NDg3MzUwMw==&action=getalbum&album_id=4077833924284514318#wechat_redirect" target="_blank" class="project-link">
+                                <img src="images/deerflow.jpg" alt="字节DeerFlow源码解析" class="project-img">
+                                <div class="project-info">
+                                    <div class="project-title">字节DeerFlow源码解析</div>
+                                    <div class="project-category">多智能体</div>
+                                </div>
+                            </a>
+                        </div>
+                        
+                        <div class="project-item">
+                            <a href="https://www.toutiao.com/article/7431366499329180169/" target="_blank" class="project-link">
+                                <img src="images/graph_rag.jpg" alt="比微软GraphRAG简洁的LightRAG" class="project-img">
+                                <div class="project-info">
+                                    <div class="project-title">比微软GraphRAG简洁的LightRAG</div>
+                                    <div class="project-category">RAG</div>
+                                </div>
+                            </a>
+                        </div>
+                        
+                        <div class="project-item">
+                            <a href="https://mp.weixin.qq.com/s/TStxEJ6D-A2B4BwUBgsPGg" target="_blank" class="project-link">
+                                <img src="images/timeout.jpg" alt="关闭延迟定时器来设计开启延迟定时器" class="project-img">
+                                <div class="project-info">
+                                    <div class="project-title">关闭延迟定时器来设计开启延迟定时器</div>
+                                    <div class="project-category">实战</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Branding Projects -->
+                <div class="project-content" id="tab-branding">
+                    <div class="project-grid">
+                        <div class="project-item">
+                            <a href="https://mp.weixin.qq.com/s/rY73dsutkvX9q_mfl_zncA" target="_blank" class="project-link">
+                                <img src="images/deerflow-lan.jpg" alt="字节DeerFlow源码之规划者" class="project-img">
+                                <div class="project-info">
+                                    <div class="project-title">字节DeerFlow源码之规划者</div>
+                                    <div class="project-category">多智能体</div>
+                                </div>
+                            </a>
+                        </div>
+                        
+                        <div class="project-item">
+                            <a href="https://mp.weixin.qq.com/s/WX4OmWI7Jrgy3MWSQMcNZQ" target="_blank" class="project-link">
+                                <img src="images/deerflow-hong.jpg" alt="字节DeerFlow源码之执行者" class="project-img">
+                                <div class="project-info">
+                                    <div class="project-title">字节DeerFlow源码之执行者</div>
+                                    <div class="project-category">多智能体</div>
+                                </div>
+                            </a>
+                        </div>
+                        
+                        <div class="project-item">
+                            <a href="https://mp.weixin.qq.com/s/yYVEzjorTa7hWdzTA_titQ" target="_blank" class="project-link">
+                                <img src="images/deerflow-huang.jpg" alt="字节DeerFlow源码之工程结构" class="project-img">
+                                <div class="project-info">
+                                    <div class="project-title">字节DeerFlow源码之工程结构</div>
+                                    <div class="project-category">多智能体</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Ecommerce Projects -->
+                <div class="project-content" id="tab-ecommerce">
+                    <div class="project-grid">
+                        <div class="project-item">
+                            <a href="https://mp.weixin.qq.com/s/2i9kKLEWifjwOXEElIECxg" target="_blank" class="project-link">
+                                <img src="images/graph-rag.jpg" alt="GraphRAG/DeepSearch智能问答" class="project-img">
+                                <div class="project-info">
+                                    <div class="project-title">GraphRAG/DeepSearch智能问答</div>
+                                    <div class="project-category">RAG</div>
+                                </div>
+                            </a>
+                        </div>
+                        
+                        <div class="project-item">
+                            <a href="https://mp.weixin.qq.com/s/Dt3E4tdqzaVCv7z6aRSrXA" target="_blank" class="project-link">
+                                <img src="images/derisk.jpg" alt="AI运维系统：OpenDeRisk" class="project-img">
+                                <div class="project-info">
+                                    <div class="project-title">AI运维系统：OpenDeRisk</div>
+                                    <div class="project-category">AI运维</div>
+                                </div>
+                            </a>
+                        </div>
+                        
+                        <div class="project-item">
+                            <a href="https://mp.weixin.qq.com/s/WJe32b4tGqORjFH1WrEThg" target="_blank" class="project-link">
+                                <img src="images/multi-agent.jpg" alt="langchain开源蜂群式多智能体" class="project-img">
+                                <div class="project-info">
+                                    <div class="project-title">langchain开源蜂群式多智能体</div>
+                                    <div class="project-category">LangChain</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Photography Projects -->
+                <div class="project-content" id="tab-photography">
+                    <div class="project-grid">
+                        <div class="project-item">
+                            <a href="https://mp.weixin.qq.com/s/W4N4LBWfRpx5gekVwW5wtg" target="_blank" class="project-link">
+                                <img src="images/alibaba-fen.jpg" alt="SpringCloud Alibaba之Nacos" class="project-img">
+                                <div class="project-info">
+                                    <div class="project-title">SpringCloud Alibaba之Nacos</div>
+                                    <div class="project-category">微服务</div>
+                                </div>
+                            </a>
+                        </div>
+                        
+                        <div class="project-item">
+                            <a href="https://mp.weixin.qq.com/s/AL9C50l0BY5II9izuAzdIg" target="_blank" class="project-link">
+                                <img src="images/alibaba-blue.jpeg" alt="Alibaba之Sentinel工作原理" class="project-img">
+                                <div class="project-info">
+                                    <div class="project-title">Alibaba之Sentinel工作原理</div>
+                                    <div class="project-category">微服务</div>
+                                </div>
+                            </a>
+                        </div>
+                        
+                        <div class="project-item">
+                            <a href="https://mp.weixin.qq.com/s/wymdXhUHlNlvdj3Ydb6C6g" target="_blank" class="project-link">
+                                <img src="images/alibaba-lan.jpeg" alt="Gateway高阶之注册中心-过滤器" class="project-img">
+                                <div class="project-info">
+                                    <div class="project-title">Gateway高阶之注册中心-过滤器</div>
+                                    <div class="project-category">微服务</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Design Projects -->
+                <div class="project-content" id="tab-design">
+                    <div class="project-grid">
+                        <div class="project-item">
+                            <a href="https://www.toutiao.com/article/6919352004188013068/" target="_blank" class="project-link">
+                                <img src="images/k8s1.jpg" alt="K8S必备架构概念-网络模型(一)" class="project-img">
+                                <div class="project-info">
+                                    <div class="project-title">K8S必备架构概念-网络模型(一)</div>
+                                    <div class="project-category">K8S</div>
+                                </div>
+                            </a>
+                        </div>
+                        
+                        <div class="project-item">
+                            <a href="https://www.toutiao.com/article/6921500636878094859/" target="_blank" class="project-link">
+                                <img src="images/k8s2.jpg" alt="K8S必备架构概念-网络模型(二)" class="project-img">
+                                <div class="project-info">
+                                    <div class="project-title">K8S必备架构概念-网络模型(二)</div>
+                                    <div class="project-category">K8S</div>
+                                </div>
+                            </a>
+                        </div>
+                        
+                        <div class="project-item">
+                            <a href="https://www.toutiao.com/article/6924477408867516935/" target="_blank" class="project-link">
+                                <img src="images/k8s3.jpg" alt="K8S必备架构概念-网络模型(三)" class="project-img">
+                                <div class="project-info">
+                                    <div class="project-title">K8S必备架构概念-网络模型(三)</div>
+                                    <div class="project-category">K8S</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Animation Projects -->
+                <div class="project-content" id="tab-animation">
+                    <div class="project-grid">
+                        <div class="project-item">
+                            <a href="https://www.toutiao.com/article/6869353034188030471/" target="_blank" class="project-link">
+                                <img src="images/ms1.jpg" alt="阿里一面：如何保证API接口数据安全？" class="project-img">
+                                <div class="project-info">
+                                    <div class="project-title">阿里一面：如何保证API接口数据安全？</div>
+                                    <div class="project-category">面试</div>
+                                </div>
+                            </a>
+                        </div>
+                        
+                        <div class="project-item">
+                            <a href="https://www.toutiao.com/article/6858257538656240135/" target="_blank" class="project-link">
+                                <img src="images/ms2.jpg" alt="大厂二面：布隆过滤器是什么原理？" class="project-img">
+                                <div class="project-info">
+                                    <div class="project-title">大厂二面：布隆过滤器是什么原理？</div>
+                                    <div class="project-category">面试</div>
+                                </div>
+                            </a>
+                        </div>
+                        
+                        <div class="project-item">
+                            <a href="https://www.toutiao.com/article/6825162152513372675/" target="_blank" class="project-link">
+                                <img src="images/ms3.jpg" alt="阿里二面：如何排查死锁？避免死锁？" class="project-img">
+                                <div class="project-info">
+                                    <div class="project-title">阿里二面：如何排查死锁？避免死锁？</div>
+                                    <div class="project-category">面试</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Price Table Section (Courses) -->
+            <section id="price-table">
+                <div class="subtitle">课 程</div>
+                <h2 class="section-title price-table-title">技术之路无止境，持续学习是捷径</h2>
+                
+                <div class="courses-grid">
+                    <div class="course-card">
+                        <div class="course-category">进阶</div>
+                        <div class="course-icon">🔒</div>
+                        <div class="course-price">
+                            <strong>Shiro安全框架</strong>
+                        </div>
+                        <ul class="course-features">
+                            <li>透视Shiro，实战搞定安全</li>
+                            <li>Shiro 不难学，源码案例手把手教</li>
+                            <li>吃透Shiro，一步到位</li>
+                        </ul>
+                        <a href="https://www.roncoo.com/view/13" target="_blank" class="course-btn">去瞧瞧</a>
+                    </div>
+                    
+                    <div class="course-card">
+                        <div class="course-category">高阶</div>
+                        <div class="course-icon">🌐</div>
+                        <div class="course-price">
+                            <strong>微服务API网关</strong>
+                        </div>
+                        <ul class="course-features">
+                            <li>解锁微服务高效访问之道</li>
+                            <li>nginx + lua 网关框架课程</li>
+                            <li>数据整合到服务管理</li>
+                        </ul>
+                        <a href="https://www.roncoo.com/view/139" target="_blank" class="course-btn">去瞧瞧</a>
+                    </div>
+                    
+                    <div class="course-card">
+                        <div class="course-category">AI工程</div>
+                        <div class="course-icon">🤖</div>
+                        <div class="course-price">
+                            <strong>LangChain+RAG</strong>
+                        </div>
+                        <ul class="course-features">
+                            <li>LangChain入门与实战</li>
+                            <li>类FastGPT的RAG实战项目</li>
+                            <li>从0到1，手把手写代码</li>
+                        </ul>
+                        <a href="https://coding.imooc.com/class/959.html" target="_blank" class="course-btn">新鲜出炉</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- AI Section -->
+            <section id="ai-section">
+                <h2 class="section-title">对AI开源技术感兴趣? 我们可以一起</h2>
+                <p>如果您想与我们一起探讨技术，可随时联系，或者进行对话。</p>
+                <a href="https://flowus.cn/laogu/share/50099c3d-d98d-4f4e-918f-2f62563840a4" target="_blank" class="btn">AI开源</a>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="container">
+            <div class="footer-section">
+                <h3 class="footer-title">探索</h3>
+                <ul class="footer-links">
+                    <li><a href="#billboard">初衷</a></li>
+                    <li><a href="#services">成长教程</a></li>
+                    <li><a href="#projects">作品集</a></li>
+                    <li><a href="#price-table">课程</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3 class="footer-title">有任何疑问?</h3>
+                <div class="contact-info"><strong>微信公众号</strong> 老顾聊技术</div>
+                <div class="contact-info"><strong>发邮件给我</strong> 767724839@qq.com</div>
+            </div>
+        </div>
+        
+        <div id="footer-bottom">
+            <div class="container">
+                <p>© 2025 <a href="https://templatesjungle.com/" style="color:#ddd;">LAOGU.</a> All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- QR Code Popup -->
+    <div class="qr-popup" id="qrPopup">
+        <div class="qr-content">
+            <img src="images/qrcode.jpg" alt="公众号二维码">
+            <p>扫码关注公众号</p>
+            <button class="close-btn" id="closeQr">关闭</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tab switching functionality
+            const tabs = document.querySelectorAll('.tab');
+            const contents = document.querySelectorAll('.project-content');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Remove active class from all tabs and contents
+                    tabs.forEach(t => t.classList.remove('active'));
+                    contents.forEach(c => c.classList.remove('active'));
+                    
+                    // Add active class to clicked tab
+                    tab.classList.add('active');
+                    
+                    // Show corresponding content
+                    const tabId = tab.getAttribute('data-tab');
+                    document.getElementById(`tab-${tabId}`).classList.add('active');
+                });
+            });
+            
+            // QR Code popup functionality
+            const followBtn = document.getElementById('followBtn');
+            const qrPopup = document.getElementById('qrPopup');
+            const closeQr = document.getElementById('closeQr');
+            
+            followBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                qrPopup.style.display = 'flex';
+            });
+            
+            closeQr.addEventListener('click', function() {
+                qrPopup.style.display = 'none';
+            });
+            
+            // Close popup when clicking outside
+            qrPopup.addEventListener('click', function(e) {
+                if (e.target === qrPopup) {
+                    qrPopup.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

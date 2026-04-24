@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+	<html lang="zh-cn">
+	<head>
+		<title>老顾聊技术的主页</title>
+		<meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="format-detection" content="telephone=no">
+	    <meta name="author" content="">
+	    <meta name="keywords" content="">
+	    <meta name="description" content="">
+		<link rel="icon" href="favicon.ico" type="image/x-icon">
+	    <link rel="stylesheet" type="text/css" href="css/normalize.css">
+	    <link rel="stylesheet" type="text/css" href="fonts/icomoon/icomoon.css">
+	    <link rel="stylesheet" type="text/css" href="css/vendor.css">
+	    <link rel="stylesheet" type="text/css" href="style.css">
+		
+		<!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@400;700&family=Jost:wght@300;400;700&display=swap" rel="stylesheet"> -->
+
+		<!-- script
+		================================================== -->
+		<script src="js/modernizr.js"></script>
+		<script src="js/config.js"></script>
+
+		<!-- 在 </title> 标签后添加 -->
+		<script>
+			// 检测设备类型并跳转
+			(function() {
+				var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+				if (isMobile) {
+					window.location.href = 'mobile.html';
+				}
+			})();
+		</script>
+
+	</head>
+
+<body>
+
+<div id="header-wrap">
+	<header id="header">
+		<div class="container">
+			<div class="inner-content">
+				<div class="grid">
+					<div class="main-logo">
+						<a href="index.html"><img src="images/main-logo.png" alt="logo"></a>
+					</div>
+
+					<nav id="navbar">
+						<div class="main-menu">
+							<ul class="menu-list">
+								<li class="menu-item active"><a href="#home" data-effect="Home">初衷</a></li>
+								<li class="menu-item"><a href="#services" class="nav-link" data-effect="services">成长教程</a></li>
+								<li class="menu-item"><a href="#projects" class="nav-link" data-effect="projects">最新文章</a></li>
+								<li class="menu-item"><a href="#price-table" class="nav-link" data-effect="price-table">课程</a></li>
+								<li class="menu-item"><a href="#testimonial" class="nav-link" data-effect="Testimonial">码友留言</a></li>
+								<li class="menu-item"><a href="#subscribe" class="nav-link" data-effect="subscribe">订阅</a></li>
+							</ul>
+
+							<div class="hamburger">
+				                <span class="bar"></span>
+				                <span class="bar"></span>
+				                <span class="bar"></span>
+				            </div>
+						</div>											
+					
+						<a href="talk.html" target="_blank" class="btn-hvr-effect">
+							<span>Let's Talk</span>
+							<i class="icon icon-long-arrow-right"></i>
+						</a><!--search-bar-->
+
+					</nav>
+
+				</div>
+			</div>
+		</div>
+	</header>		
+</div><!--header-wrap-->
+
+<section id="billboard">
+	<div class="main-banner pattern-overlay">
+		<div class="banner-content" data-aos="fade-up">
+		    <h2 class="section-subtitle">【老顾聊技术】</h2>
+			<h3 class="banner-title">技术同路人留步！<br/>不扯职场套路，<br/>专挖技术本质的自留地</h3>
+			<p>不搞晦涩的学术派，只做接地气的实战派。在这里，你能看到开源社区里那些 “藏在评论区的大神思路”，能听到 AI 项目从 0 到 1 时 “差点夭折的关键转折”。老顾不想当什么技术权威，只想当你的技术搭子：你遇到的坎，我或许踩过；你琢磨的路，我们一起探。</p>
+			<div class="btn-wrap">
+				<a href="talk.html" target="_blank" class="btn-accent">随时来聊</a>
+			</div>
+		</div><!--banner-content-->
+		<figure>
+			<img src="images/main-banner.png" alt="banner" class="banner-image">
+		</figure> 
+	</div>
+</section>
+
+<button id="scrollToTopBtn">Top</button>
+
+<!--
+<section id="about">
+	<div class="container">
+		<div class="row">
+			<div class="inner-content">
+				<div class="company-detail">
+					<div class="grid">
+						<figure>
+							<img src="images/single-image.jpg" alt="book" class="single-image">
+						</figure>
+						<div class="detail-entry" data-aos="fade-up">
+
+							<div class="section-header">
+								<h2 class="section-subtitle liner">About Us</h2>
+								<h3 class="section-title">We create beautiful design for good business</h3>
+							</div>
+
+							<div class="detail-wrap">
+								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Diam tincidunt quisque faucibus velit felis tincidunt. Turpis platea sed arcu aliquam lorem in. In ut mattis faucibus purus. Donec libero bibendum ut id risus, bibendum faucibus velit mattis diam etiam.</p>
+								<div class="btn-wrap">
+									<a href="#" class="btn-accent">Read More</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>	
+		</div>
+	</div>
+</section>
+-->
+
+<section id="services">
+	<div class="container">
+		<div class="row">
+			<div class="inner-content">
+				<div class="service-content">
+						<div class="grid">
+							<div class="detail-entry">
+
+								<div class="section-header">
+									<h2 class="section-subtitle liner">成长教程</h2>
+									<h3 class="section-title">苗扎根、叶经炼、梁木成</h3>
+								</div>
+
+								<div class="detail-wrap">
+									<p>想从技术萌新逆袭成架构师？成长教程【免费】帮你铺好了路：先把编程基础、数据结构这些地基扎稳，再练溜框架应用、性能优化的进阶本事，接着啃透分布式、高可用这些硬骨头，最后拿下系统设计和决策。跟着一步一个脚印往上走，技术实力绝对噌噌涨！</p>	
+									<div class="btn-wrap">
+										<a href="#" class="btn-accent" id="follow-btn">关注公众号</a>
+										<!-- 添加二维码浮层 -->
+										<div class="qr-code-popup">
+											<img src="images/qrcode.jpg" alt="公众号二维码">
+											<p>扫码关注公众号</p>
+										</div>
+									</div>
+								</div><!--detail-wrap-->								
+							</div>
+
+							<div class="service-grid grid" data-aos="fade-up">
+
+								<div class="column odd-column">
+									<div class="icon-box">
+										<img src="images/java_base.png" style="width: 64px;height:64px" alt="branding">
+										<div class="title">Java基础</div>
+									</div>
+									<div class="icon-box">
+										<img src="images/weifw.png" style="width: 64px;height:64px" alt="animation">
+										<div class="title">微服务</div>
+									</div>
+								</div>
+
+								<div class="column">
+									<div class="icon-box">
+										<img src="images/zhongjianjian.png" style="width: 64px;height:64px" alt="branding">
+										<div class="title">中间件</div>
+									</div>
+									<div class="icon-box">
+										<img src="images/qianduan.png" style="width: 64px;height:64px" alt="animation">
+										<div class="title">前端</div>
+									</div>
+									<div class="icon-box">
+										<img src="images/yunyuansheng.png" style="width: 64px;height:64px" alt="animation">
+										<div class="title">云原生</div>
+									</div>
+								</div>
+
+								<div class="column odd-column">
+									<div class="icon-box">
+										<img src="images/shizhan.png" style="width: 64px;height:64px" alt="branding">
+										<div class="title">实战</div>
+									</div>
+									<div class="icon-box">
+										<img src="images/miaosha.png" style="width: 64px;height:64px" alt="animation">
+										<div class="title">秒杀</div>
+									</div>
+								</div>
+
+
+							</div>
+
+							</div><!--grid-->
+						</div>
+
+				</div><!--inner-content-->
+			</div>
+		</div>
+	</div>
+</section>
+
+<section id="projects">
+	<div class="container">
+		<div class="row">
+			<div class="inner-content">
+
+			<div class="grid">
+
+				<div class="section-header">
+					<h2 class="section-subtitle liner">作品集</h2>
+					<h3 class="section-title">最新文章</h3>
+				</div>
+	   
+				<ul class="tabs">
+				  <li data-tab-target="#all" class="active tab">推荐</li>
+				  <li data-tab-target="#branding" class="tab">AI Agent</li>
+				  <li data-tab-target="#ecommerce" class="tab">AI开源</li>
+				  <li data-tab-target="#photography" class="tab">SpringCloud Alibaba</li>
+				  <li data-tab-target="#design" class="tab">K8S</li>
+				  <li data-tab-target="#animation" class="tab">面试</li>
+				</ul>	
+
+			</div><!--grid-->			
+
+				<div class="tab-content">
+
+				  <div id="all" data-tab-content class="active" data-aos="fade-up">
+				  
+				  	<div class="grid project-grid">						 
+
+					  	<figure class="project-style hvr-grayscale">
+							<img src="images/deerflow.jpg" alt="project" class="project-item">
+							<figcaption>
+								<h3><a href="https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzU3NDg3MzUwMw==&action=getalbum&album_id=4077833924284514318#wechat_redirect" target="_blank">字节DeerFlow源码解析</a></h3>
+								<div class="category-title">多智能体</div>
+							</figcaption>
+						</figure>
+
+						<figure class="project-style hvr-grayscale">
+							<img src="images/graph_rag.jpg" alt="project" class="project-item">
+							<figcaption>
+								<h3><a href="https://www.toutiao.com/article/7431366499329180169/" target="_blank">比微软GraphRAG简洁的LightRAG</a></h3>
+								<div class="category-title">RAG</div>
+							</figcaption>
+						</figure>
+
+					  	<figure class="project-style hvr-grayscale">
+							<img src="images/timeout.jpg" alt="project" class="project-item">
+							<figcaption>
+								<h3><a href="https://mp.weixin.qq.com/s/TStxEJ6D-A2B4BwUBgsPGg" target="_blank">关闭延迟定时器来设计开启延迟定时器</a></h3>
+								<div class="category-title">实战</div>
+							</figcaption>
+						</figure>
+<!-- 
+						<figure class="project-style hvr-grayscale">
+							<img src="images/deerflow-lan.jpg" alt="project" class="project-item">
+							<figcaption>
+								<h3><a href="#">Sajna fashion wears</a></h3>
+								<div class="category-title">UI/UX Design</div>
+							</figcaption>
+						</figure>
+
+					  	<figure class="project-style hvr-grayscale">
+							<img src="images/deerflow-hong.jpg" alt="project" class="project-item">
+							<figcaption>
+								<h3><a href="#">Clayphone app uI</a></h3>
+								<div class="category-title">UI/UX Design</div>
+							</figcaption>
+						</figure>
+
+					  	<figure class="project-style hvr-grayscale">
+							<img src="images/deerflow-huang.jpg" alt="project" class="project-item">
+							<figcaption>
+								<h3><a href="#">John a.powell card</a></h3>
+								<div class="category-title">Branding</div>
+							</figcaption>
+						</figure> -->
+
+			    	 </div>
+
+				  </div>
+
+				  <div id="branding" data-tab-content>
+				  	<div class="grid project-grid">
+
+					  	<figure class="project-style hvr-grayscale">
+							<img src="images/deerflow-lan.jpg" alt="project" class="project-item">
+							<figcaption>
+								<h3><a href="https://mp.weixin.qq.com/s/rY73dsutkvX9q_mfl_zncA" target="_blank">字节DeerFlow源码之规划者</a></h3>
+								<div class="category-title">多智能体</div>
+							</figcaption>
+						</figure>
+
+					  	<figure class="project-style hvr-grayscale">
+							<img src="images/deerflow-hong.jpg" alt="project" class="project-item">
+							<figcaption>
+								<h3><a href="https://mp.weixin.qq.com/s/WX4OmWI7Jrgy3MWSQMcNZQ" target="_blank">字节DeerFlow源码之执行者</a></h3>
+								<div class="category-title">多智能体</div>
+							</figcaption>
+						</figure>
+
+					  	<figure class="project-style hvr-grayscale">
+							<img src="images/deerflow-huang.jpg" alt="project" class="project-item">
+							<figcaption>
+								<h3><a href="https://mp.weixin.qq.com/s/yYVEzjorTa7hWdzTA_titQ" target="_blank">字节DeerFlow源码之工程结构</a></h3>
+								<div class="category-title">多智能体</div>
+							</figcaption>
+						</figure>
+
+					  	<!-- <figure class="project-style hvr-grayscale">
+							<img src="images/project3.jpg" alt="project" class="project-item">
+							<figcaption>
+								<h3><a href="#">John a.powell card</a></h3>
+								<div class="category-title">Branding</div>
+							</figcaption>
+						</figure> -->
+
+			    	 </div>
+				  </div>
+
+				  <div id="ecommerce" data-tab-content>
+				  	<div class="grid project-grid">
+
+					  	<figure class="project-style hvr-grayscale">
+							<img src="images/graph-rag.jpg" alt="project" class="project-item">
+							<figcaption>
+								<h3><a href="https://mp.weixin.qq.com/s/2i9kKLEWifjwOXEElIECxg" target="_blank">GraphRAG/DeepSearch智能问答</a></h3>
+								<div class="category-title">RAG</div>
+							</figcaption>
+						</figure>
+
+					  	<figure class="project-style hvr-grayscale">
+							<img src="images/derisk.jpg" alt="project" class="project-item">
+							<figcaption>
+								<h3><a href="https://mp.weixin.qq.com/s/Dt3E4tdqzaVCv7z6aRSrXA" target="_blank">AI运维系统：OpenDeRisk</a></h3>
+								<div class="category-title">AI运维</div>
+							</figcaption>
+						</figure>
+
+					  	<figure class="project-style hvr-grayscale">
+							<img src="images/multi-agent.jpg" alt="project" class="project-item">
+							<figcaption>
+								<h3><a href="https://mp.weixin.qq.com/s/WJe32b4tGqORjFH1WrEThg" target="_blank">langchain开源蜂群式多智能体</a></h3>
+								<div class="category-title">LangChain</div>
+							</figcaption>
+						</figure>
+
+					  	<!-- <figure class="project-style hvr-grayscale">
+							<img src="images/project2.jpg" alt="project" class="project-item">
+							<figcaption>
+								<h3><a href="#">John a.powell card</a></h3>
+								<div class="category-title">Branding</div>
+							</figcaption>
+						</figure> -->
+
+			    	 </div>
+				  </div>
+
+				  <div id="photography" data-tab-content>
+				  	<div class="grid project-grid">
+
+					  	<figure class="project-style hvr-grayscale">
+							<img src="images/alibaba-fen.jpg" alt="project" class="project-item">
+							<figcaption>
+								<h3><a href="https://mp.weixin.qq.com/s/W4N4LBWfRpx5gekVwW5wtg" target="_blank">SpringCloud Alibaba之Nacos</a></h3>
+								<div class="category-title">微服务</div>
+							</figcaption>
+						</figure>
+
+					  	<figure class="project-style hvr-grayscale">
+							<img src="images/alibaba-blue.jpeg" alt="project" class="project-item">
+							<figcaption>
+								<h3><a href="https://mp.weixin.qq.com/s/AL9C50l0BY5II9izuAzdIg" target="_blank">Alibaba之Sentinel工作原理</a></h3>
+								<div class="category-title">微服务</div>
+							</figcaption>
+						</figure>
+
+					  	<figure class="project-style hvr-grayscale">
+							<img src="images/alibaba-lan.jpeg" alt="project" class="project-item">
+							<figcaption>
+								<h3><a href="https://mp.weixin.qq.com/s/wymdXhUHlNlvdj3Ydb6C6g" target="_blank">Gateway高阶之注册中心-过滤器</a></h3>
+								<div class="category-title">微服务</div>
+							</figcaption>
+						</figure>
+
+					  	<!-- <figure class="project-style hvr-grayscale">
+							<img src="images/photography2.jpg" alt="project" class="project-item">
+							<figcaption>
+								<h3><a href="#">John a.powell card</a></h3>
+								<div class="category-title">Branding</div>
+							</figcaption>
+						</figure> -->
+
+			    	 </div>
+				  </div>
+
+				  <div id="design" data-tab-content>
+				  	<div class="grid project-grid">
+
+					  	<figure class="project-style hvr-grayscale">
+							<img src="images/k8s1.jpg" alt="project" class="project-item">
+							<figcaption>
+								<h3><a href="https://www.toutiao.com/article/6919352004188013068/" target="_blank">K8S必备架构概念-网络模型(一)</a></h3>
+								<div class="category-title">K8S</div>
+							</figcaption>
+						</figure>
+
+					  	<figure class="project-style hvr-grayscale">
+							<img src="images/k8s2.jpg" alt="project" class="project-item">
+							<figcaption>
+								<h3><a href="https://www.toutiao.com/article/6921500636878094859/" target="_blank">K8S必备架构概念-网络模型(二)</a></h3>
+								<div class="category-title">K8S</div>
+							</figcaption>
+						</figure>
+
+					  	<figure class="project-style hvr-grayscale">
+							<img src="images/k8s3.jpg" alt="project" class="project-item">
+							<figcaption>
+								<h3><a href="https://www.toutiao.com/article/6924477408867516935/" target="_blank">K8S必备架构概念-网络模型(三)</a></h3>
+								<div class="category-title">K8S</div>
+							</figcaption>
+						</figure>
+
+					  	<!-- <figure class="project-style hvr-grayscale">
+							<img src="images/project3.jpg" alt="project" class="project-item">
+							<figcaption>
+								<h3><a href="#">John a.powell card</a></h3>
+								<div class="category-title">Branding</div>
+							</figcaption>
+						</figure> -->
+
+			    	 </div>
+				  </div>
+
+				  <div id="animation" data-tab-content>
+				  	<div class="grid project-grid">
+
+					  	<figure class="project-style hvr-grayscale">
+							<img src="images/ms1.jpg" alt="project" class="project-item">
+							<figcaption>
+								<h3><a href="https://www.toutiao.com/article/6869353034188030471/" target="_blank">阿里一面：如何保证API接口数据安全？</a></h3>
+								<div class="category-title">面试</div>
+							</figcaption>
+						</figure>
+
+					  	<figure class="project-style hvr-grayscale">
+							<img src="images/ms2.jpg" alt="project" class="project-item">
+							<figcaption>
+								<h3><a href="https://www.toutiao.com/article/6858257538656240135/" target="_blank">大厂二面：布隆过滤器是什么原理？</a></h3>
+								<div class="category-title">面试</div>
+							</figcaption>
+						</figure>
+
+					  	<figure class="project-style hvr-grayscale">
+							<img src="images/ms3.jpg" alt="project" class="project-item">
+							<figcaption>
+								<h3><a href="https://www.toutiao.com/article/6825162152513372675/" target="_blank">阿里二面：如何排查死锁？避免死锁？</a></h3>
+								<div class="category-title">面试</div>
+							</figcaption>
+						</figure>
+
+					  	<!-- <figure class="project-style hvr-grayscale">
+							<img src="images/project2.jpg" alt="project" class="project-item">
+							<figcaption>
+								<h3><a href="#">John a.powell card</a></h3>
+								<div class="category-title">Branding</div>
+							</figcaption>
+						</figure> -->
+
+			    	 </div>
+
+				  </div>
+
+				</div>				
+
+			</div><!--inner-content-->	
+		</div>
+	</div>
+
+</section>
+
+<section id="testimonial">
+	<div class="container">
+		<div class="row">
+			<div class="inner-content">
+				<div class="grid">
+
+						<div class="section-header">
+							<h2 class="section-subtitle liner">码友留言</h2>
+							<h3 class="section-title">大家说了什么</h3>
+							<p>从一句留言开始，让困惑有解，让想法有伴<br/>聚焦交流的实用价值，既解决问题，也凝聚同频思维。</p>
+						</div>
+
+						<div class="testimonial-content" data-aos="fade-up">
+
+							<div class="testimonial-slider">						
+								<div class="testimonial-item">
+									<div class="author-thumb">
+										<img src="images/slipdaly.png" alt="testimonial" class="review-image">
+									</div>
+
+									<div class="author-detail">
+										<q>它的精髓是允许传递一个方法(即传递一段代码逻辑)进来，简单的用法大多数人是体会不到这样写的意义的。</q>				
+										<div class="author-name">slipdaly</div>
+										<div class="author-profession">技术人员</div>
+									</div>
+								</div>
+								<div class="testimonial-item">
+									<div class="author-thumb">
+										<img src="images/MADAO.jpg" alt="testimonial" class="review-image">
+									</div>
+
+									<div class="author-detail">
+										<q>好文，哥有个点想问一下：<br/>1、我看完这个方案感觉比本地事务表+定时任务效率更高，那电商可以是否可以采用这种方案？<br/>2、如果说MQ在发送消息时候宕机了，是否还会有回查？是单次触发还是连续触发啊？</q>				
+										<div class="author-name">MADAO</div>
+										<div class="author-profession">码友</div>
+									</div>
+								</div>
+							</div><!--testimonial-slider-->	
+
+							<div class="button-container">
+								<button class="prev slick-arrow">
+									<i class="icon icon-arrow-left"></i>
+								</button>
+								<button class="next slick-arrow">
+									<i class="icon icon-arrow-right"></i>
+								</button>
+							</div>
+
+						</div><!--testimonial-content-->
+
+					</div><!--grid-->
+				</div><!--inner-content-->
+			</div>
+		</div>
+</section>
+
+<section id="price-table">
+	<div class="container">
+		<div class="row">
+			<div class="inner-content">
+
+						<div class="section-header align-center">
+							<h2 class="section-subtitle">课 程</h2>
+							<h3 class="section-title">技术之路无止境，持续学习是捷径</h3>
+						</div>
+
+						<div class="grid">
+
+							<div class="column align-center">
+								<div class="category-title">
+									进阶
+								</div>
+								<i class="icon icon-shiro"></i>
+								<div class="price">
+									<sup></sup>
+									<strong>Shiro安全框架</strong>
+									<small></small>
+								</div>
+								<ul>
+									<li>透视Shiro，实战搞定安全 </li>
+									<li>Shiro 不难学，源码案例手把手教 </li>
+									<li>吃透Shiro，一步到位 </li>
+								</ul>
+								<div class="btn-wrap">
+									<a href="https://www.roncoo.com/view/13" target="_blank" class="btn-outline-accent">去瞧瞧</a>
+								</div>								
+							</div><!--column-->
+
+							<div class="column align-center">
+								<div class="category-title">
+									高阶
+								</div>
+								<i class="icon icon-gateway"></i>
+								<div class="price">
+									<sup></sup>
+									<strong>微服务API网关</strong>
+									<small></small>
+								</div>
+								<ul>
+									<li>解锁微服务高效访问之道 </li>
+									<li>nginx + lua 网关框架课程 </li>
+									<li>数据整合到服务管理 </li>
+								</ul>
+								<div class="btn-wrap">
+									<a href="https://www.roncoo.com/view/139" target="_blank" class="btn-outline-accent">去瞧瞧</a>
+								</div>								
+							</div><!--column-->
+
+							<div class="column align-center">
+								<div class="category-title">
+									AI工程
+								</div>
+								<i class="icon icon-langchain"></i>
+								<div class="price">
+									<sup></sup>
+									<strong>LangChain+RAG</strong>
+									<small></small>
+								</div>
+								<ul>
+									<li>LangChain入门与实战 </li>
+									<li>类FastGPT的RAG实战项目 </li>
+									<li>从0到1，手把手写代码 </li>
+								</ul>
+								<div class="btn-wrap">
+									<a href="https://coding.imooc.com/class/959.html" target="_blank" class="btn-outline-accent">新鲜出炉</a>
+								</div>								
+							</div><!--column-->
+
+						</div><!--grid-->	
+
+				</div><!--inner-content-->
+			</div>
+		</div>
+</section>
+<!-- 
+<section id="latest-blog">
+	<div class="container">
+		<div class="row">
+			<div class="inner-content">
+
+			<div class="section-header align-center">
+				<h2 class="section-subtitle">Blogs</h2>
+				<h3 class="section-title">Latest blog posts</h3>
+			</div>
+
+				<div class="grid" data-aos="fade-up">
+
+					<article class="column">
+
+						<figure>
+							<a href="#" class="image-hvr-effect">
+								<img src="images/post-image1.jpg" alt="post" class="post-image">		
+							</a>
+						</figure>
+
+						<div class="post-item">	
+
+						<div class="meta-tag">
+							<div class="meta-date">Mar 30, 2021</div>			
+						    <a href="#" class="categories">inspiration</a>
+						 </div>
+
+					    <h3 class="post-title">
+					    	<a href="#">Reading books always makes the moments happy</a>
+					    </h3>
+
+						 </div>
+					</article>
+
+					<article class="column">
+
+						<figure>
+							<a href="#" class="image-hvr-effect">
+								<img src="images/post-image2.jpg" alt="post" class="post-image">		
+							</a>
+						</figure>
+
+						<div class="post-item">	
+
+						<div class="meta-tag">
+							<div class="meta-date">Mar 30, 2021</div>				
+						    <a href="#" class="categories">inspiration</a>
+						 </div>
+
+					    <h3 class="post-title">
+					    	<a href="#">Reading books always makes the moments happy</a>
+					    </h3>
+
+						 </div>
+					</article>
+
+					<article class="column">
+
+						<figure>
+							<a href="#" class="image-hvr-effect">
+								<img src="images/post-image3.jpg" alt="post" class="post-image">		
+							</a>
+						</figure>
+
+						<div class="post-item">	
+
+						<div class="meta-tag">
+							<div class="meta-date">Mar 30, 2021</div>				
+						    <a href="#" class="categories">inspiration</a>
+						 </div>
+
+					    <h3 class="post-title">
+					    	<a href="#">Reading books always makes the moments happy</a>
+					    </h3>
+
+						 </div>
+					</article>
+
+
+				</div>
+
+			</div>	
+		</div>
+	</div>
+</section> -->
+
+<section id="subscribe">
+	<div class="container">
+		<div class="row">
+			<div class="inner-content">			
+
+				<div class="grid">
+
+					<div class="section-header">
+						<h2 class="section-subtitle liner">时事</h2>
+						<h3 class="section-title">邮箱留一留<br/>老顾时事到</h3>
+					</div>
+
+					<div class="subscribe-content" data-aos="fade-up">
+						<p>如：今天，给大家介绍一款真正为国内企业和组织量身打造的开源工作流引擎——FlowLong。</p>
+						<form id="form">
+							<input type="text" name="email" placeholder="输入您的邮箱地址">
+							<button class="btn-subscribe">订阅</button>
+						</form>					
+					</div>
+
+				</div><!--grid-->
+
+			</div>	
+		</div>
+	</div>
+</section>
+
+<section id="association-with">
+	<div class="container">
+		<div class="row">
+			<div class="inner-content">	
+				<div class="grid" data-aos="fade-left">
+					<a href="https://www.langchain.com/" target="_blank">
+						<img src="images/langchain.png" alt="LangChain" class="association-image">
+					</a>
+					<a href="https://hf-mirror.com" target="_blank">
+						<img src="images/huggingface.png" alt="Hugging Face" class="association-image">
+					</a>
+					<a href="#services">
+						<img src="images/gongzhonghao.png" alt="公众号" class="association-image">
+					</a>
+					<a href="https://www.bilibili.com/" target="_blank">
+						<img src="images/bili.png" alt="B站" class="association-image">
+					</a>
+					<a href="http://toutiao.com/c/user/5420418219/?from=qrcode" target="_blank">
+						<img src="images/toutiao.png" alt="头条号" class="association-image">
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>	
+</section>
+
+<footer id="footer">
+	<div class="container">
+		<div class="row">
+			<div class="inner-content">
+					<div class="footer-menu-list" data-aos="fade-up">
+						<div class="grid">
+
+							<div class="footer-menu">
+								<h3>探索</h3>
+								<ul class="menu-list">
+									<li class="menu-item">
+										<a href="#home">初衷</a>
+									</li>
+									<li class="menu-item">
+										<a href="#services">成长教程</a>
+									</li>
+									<li class="menu-item">
+										<a href="#projects">作品集</a>
+									</li>	
+									<li class="menu-item">
+										<a href="#price-table">课程</a>
+									</li>								
+								</ul>
+							</div>
+
+							<div class="footer-menu">
+								<h3>有任何疑问?</h3>
+								<ul class="menu-list">
+									<li class="menu-item">
+										<strong>知识星球</strong>
+										老顾聊技术(星球号：949826)
+									</li>
+									<li class="menu-item">
+										<strong>微信公众号</strong>
+										老顾聊技术
+									</li>
+									<li class="menu-item">
+										<strong>发邮件给我</strong>
+										767724839@qq.com
+									</li>								
+								</ul>
+							</div>
+
+							<div class="footer-item">
+								<h2>对AI开源技术感兴趣? 我们可以一起</h2>
+								<p>如果您想与我们一起探讨技术，可随时联系，或者进行对话。</p>
+								<div class="btn-wrap">
+									<a href="https://flowus.cn/laogu/share/50099c3d-d98d-4f4e-918f-2f62563840a4" target="_blank" class="btn-accent">AI开源</a>
+								</div>
+							</div>
+
+						</div>
+					</div><!--footer-menu-list-->
+			</div><!--inner-content-->
+		</div>
+	</div>
+</footer>
+
+<div id="footer-bottom">
+	<div class="container">
+		<div class="grid">
+			<div class="copyright">
+				<p>© 2025 <a href="https://templatesjungle.com/">LAOGU.</a> All rights reserved.</p>
+			</div>
+
+			<div class="social-links">
+				<ul>
+					<li>
+						<a href="#services" title="公众号"><i class="icon"><img src="images/wx.ico" width="16px" height="16px" /></i></a>
+					</li>
+					<li>
+						<a href="https://www.bilibili.com/" title="B站UP主"><i class="icon"><img src="images/b.ico" width="16px" height="16px" /></i></a>
+					</li>
+					<li>
+						<a href="http://toutiao.com/c/user/5420418219/?from=qrcode" title="头条号" target="_blank"><i class="icon"><img src="images/toutiao.ico" width="16px" height="16px" /></i></a>
+					</li>
+					<li>
+						<a href="https://wx.zsxq.com/" title="知识星球-老顾聊技术" target="_blank"><i class="icon"><img src="images/xq.ico" width="16px" height="16px" /></i></a>
+					</li>
+				</ul>
+			</div>
+		</div><!--grid-->	
+	</div>
+</div>
+
+
+<script src="js/jquery-1.11.0.min.js"></script>
+<script src="js/plugins.js"></script>
+<script src="js/slideNav.min.js"></script>
+<script src="js/slideNav.js"></script>
+<script src="js/script.js"></script>	
+
+<script>
+document.getElementById('form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const emailInput = this.querySelector('input[name="email"]');
+    const email = emailInput.value;
+    
+    // 基本的邮箱格式验证
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        alert('请输入有效的邮箱地址');
+        return;
+    }
+    
+    // 发送订阅请求
+    fetch(`${API_BASE}/subscribe`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email: email })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.message) {
+            alert('订阅成功！感谢你的信任！');
+            emailInput.value = ''; // 清空输入框
+        } else {
+            alert('订阅失败，不能重复订阅哦，请重试');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('订阅过程中出现错误，请重试');
+    });
+});
+</script>
+</body>
+</html>	
